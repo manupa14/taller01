@@ -12,9 +12,19 @@ import frsf.isi.died.tp.util.Ordenable;
 /**
  * Representa de manera abstracta los materiales de capacitaci√≥n
  * 
+ * Integrantes:
+ * Roces, Mariano
+ * Pagliaruzza, Manuel
+ * Galv·n, Juan Pablo
+ * 
+ * URL: https://github.com/manupa14/taller01.git
+ * 
  * @author mdominguez
  */
-public abstract class MaterialCapacitacion {
+
+
+public abstract class MaterialCapacitacion implements Ordenable {
+	
 	protected Integer id;
 	/**
 	 * Titulo del material
@@ -71,6 +81,30 @@ public abstract class MaterialCapacitacion {
 	 */
 	public abstract Double precio();
 	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public Double getCosto() {
+		return costo;
+	}
+
+	public void setCosto(Double costo) {
+		this.costo = costo;
+	}
+
 	/**
 	 * Retorna verdadero si es una instancia de libro, falso en caso contrario
 	 * @return
@@ -88,7 +122,12 @@ public abstract class MaterialCapacitacion {
 	//  retornando el titulo, y el precio 	 * usando el formato : 
 	// [Titulo: <titulo> ; Precio: <precio> ]
 	
+	@Override
+	public String toString() {
+		return "[Titulo: "+this.getTitulo()+"; Precio: "+this.precio()+"]";
+	}
 	
 	// TODO 10: implementar Ordenable
+	
 
 }
