@@ -89,6 +89,22 @@ public class ListaServiceRadix extends ListasService {
 				// TODO 11: IMPLEMENTAR el ALGORITMO que chequea el residuo 
 				// e inserta el elemento en la posicion de la matriz de residuos
 				// e incrementa el contador en cantidadPorFila en 1
+				int aux = ((mat.valor()/peso)%10);
+				int indiceAux = 0;
+				boolean agregado = false;
+				
+				while(agregado == false) {
+					if(residuos[aux][indiceAux] == null) {
+						residuos[aux][indiceAux] = mat;
+						agregado = true;
+						cantidadPorFila[aux]+=1;
+					} else {
+						indiceAux++;
+					}
+				}
+				
+				indiceAux = 0;
+				agregado = false;
 			}
 			int indiceArregloOrdenado = 0;
 			for (int j = 0; j < 10; j++) {
@@ -97,6 +113,14 @@ public class ListaServiceRadix extends ListasService {
 				}
 				// reiniciar el contador
 				cantidadPorFila[j] = 0;
+			}
+			
+			// se implemento un algoritmo de vaciado de la matriz residuos para
+			// volver a utilizarse cuando la variable peso se actualice
+			for (int vaciar1 = 0; vaciar1 < 10; vaciar1++) {
+				for (int vaciar2 = 0; vaciar2 < 10; vaciar2++) {
+					residuos[vaciar1][vaciar2] = null;
+				}
 			}
 		}
 	}

@@ -112,7 +112,6 @@ public class Libro extends MaterialCapacitacion {
 		
 		return super.costo+(this.precioCompra*(1.0+(0.03*(this.paginas/150))));
 	}
-
 	
 
 }

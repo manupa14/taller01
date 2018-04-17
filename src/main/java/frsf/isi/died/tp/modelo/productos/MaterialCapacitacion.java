@@ -128,6 +128,10 @@ public abstract class MaterialCapacitacion implements Ordenable {
 	}
 	
 	// TODO 10: implementar Ordenable
+	@Override
+	public final int valor() {
+		return (int)this.precio().intValue();
+	}
 	
 
 }
