@@ -34,7 +34,7 @@ public class LibroTest {
 	@Test
 	public void testToString() {
 		Double precioEsperado = 100.0 + (200.0 * 1.03);
-		String esperado = "[Titulo Libro 1; PRECIO: "+precioEsperado+"]";
+		String esperado = "[Titulo: Libro 1; Precio: "+precioEsperado+"]";
 		String obtenido = libroTestear.toString();
 		assertEquals(esperado, obtenido);
 	}
