@@ -113,5 +113,12 @@ public class Libro extends MaterialCapacitacion {
 		return super.costo+(this.precioCompra*(1.0+(0.03*(this.paginas/150))));
 	}
 	
-
+	@Override
+	public boolean equals(Object Aux) {
+		if((Aux instanceof Libro) && (this.titulo.equalsIgnoreCase(((Libro) Aux).getTitulo()))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

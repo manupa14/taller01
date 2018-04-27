@@ -51,4 +51,13 @@ public class Video extends MaterialCapacitacion {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	@Override
+	public boolean equals(Object Aux) {
+		if((Aux instanceof Video) && (this.titulo.equalsIgnoreCase(((Video) Aux).getTitulo()))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

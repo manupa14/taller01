@@ -133,5 +133,12 @@ public abstract class MaterialCapacitacion implements Ordenable {
 		return (int)this.precio().intValue();
 	}
 	
-
+	@Override
+	public boolean equals(Object Aux) {
+		if((Aux instanceof MaterialCapacitacion) && (this.titulo.equalsIgnoreCase(((MaterialCapacitacion) Aux).getTitulo()))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
