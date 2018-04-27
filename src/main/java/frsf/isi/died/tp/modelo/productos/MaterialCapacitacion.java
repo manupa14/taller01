@@ -23,7 +23,7 @@ import frsf.isi.died.tp.util.Ordenable;
  */
 
 
-public abstract class MaterialCapacitacion implements Ordenable {
+public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
 	
 	protected Integer id;
 	/**
@@ -139,6 +139,16 @@ public abstract class MaterialCapacitacion implements Ordenable {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	@Override 
+	public int compareTo(MaterialCapacitacion Aux) {
+		if(this.equals(Aux) == true) {
+			int precioAux = this.precio().intValue() - Aux.precio().intValue();
+			return precioAux;
+		} else {
+			return this.titulo.compareToIgnoreCase(Aux.getTitulo());
 		}
 	}
 }
