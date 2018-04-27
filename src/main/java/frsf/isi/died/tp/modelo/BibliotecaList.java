@@ -26,8 +26,8 @@ public class BibliotecaList implements Biblioteca {
 	
 	public Integer cantidadLibros() {
 		int libros = 0;
-		for(MaterialCapacitacion Aux : materiales) {
-			if(Aux instanceof Libro) {
+		for(int i=0; i < this.cantidadMateriales(); i++) {
+			if(this.materiales.get(i) instanceof Libro) {
 				libros++;
 			}
 		}
@@ -36,8 +36,8 @@ public class BibliotecaList implements Biblioteca {
 	
 	public Integer cantidadVideos() {
 		int videos = 0;
-		for(MaterialCapacitacion Aux : materiales) {
-			if(Aux instanceof Video) {
+		for(int i=0; i < this.cantidadMateriales(); i++) {
+			if(this.materiales.get(i) instanceof Video) {
 				videos++;
 			}
 		}
@@ -49,8 +49,8 @@ public class BibliotecaList implements Biblioteca {
 	}
 	
 	public void imprimir() {
-		for(MaterialCapacitacion Aux : materiales) {
-			System.out.println(Aux);
+		for(int i=0; i < this.cantidadMateriales(); i++) {
+			System.out.println(this.materiales.get(i).toString());
 		}
 	}
 	
@@ -59,6 +59,34 @@ public class BibliotecaList implements Biblioteca {
 			Collections.sort(this.materiales, (m1, m2) -> m1.precio().intValue() - m2.precio().intValue());
 		} else {
 			Collections.sort(this.materiales);
+		}
+	}
+	
+	public MaterialCapacitacion buscar(Integer precio) {
+		Collections.sort(this.materiales, (m1, m2) ->  m1.getCosto().intValue() - m2.getCosto().intValue());
+		return buscadorBinario(0, this.materiales.size(), precio);
+	}
+	
+	private MaterialCapacitacion buscadorBinario(Integer inicio,Integer fin, Integer costo){
+		
+		if((fin == 1) && (this.materiales.get(0).getCosto().intValue() == costo)) {
+			return this.materiales.get(0);
+		} else {
+			int centro = ((inicio+fin)/2);
+			int Aux = this.materiales.get(centro).getCosto().intValue();
+			
+			if(Aux == costo) {
+				return this.materiales.get(centro);
+			} else {
+				if(Aux > costo) {
+					return buscadorBinario(inicio, centro-1, costo);
+				} else {
+					if(Aux < costo) {
+						return buscadorBinario(centro+1, fin, costo);
+					} 
+				}
+			}
+			throw new RuntimeException ("Material de precio " + costo + " no encontrado");
 		}
 	}
 }
