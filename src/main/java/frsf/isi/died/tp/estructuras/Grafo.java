@@ -215,26 +215,39 @@ public class Grafo<T> {
     public List<T> buscarCaminoNSaltos(T n1,T n2,Integer saltos){
 		Vertice<T> origen = this.getNodo(n1);
 		Vertice<T> destino= this.getNodo(n2);
-		List<T> resultado = new ArrayList<>();
-        return this.buscarCaminoNSaltos(origen, destino, saltos, new HashSet<Vertice>(), resultado);
+        return this.buscarCaminoNSaltos(origen, destino, saltos, new HashSet<Vertice>());
          
     }
-    private List<T> buscarCaminoNSaltos(Vertice<T> n1,Vertice<T> n2,Integer saltos,HashSet<Vertice> visitados, List<T> resultado){
-       
-       if(visitados.contains(n1)) {
-    	   return null;
-       } 
-       if(this.getAdyacentes(n1).size() != 0) {
-    	   resultado.add(n1);
-       } 
-       
-       if((n1 == n2) && (saltos == resultado.size())) {
-    	   return resultado;
-       }
-       
-       
-      
+    private List<T> buscarCaminoNSaltos(Vertice<T> n1,Vertice<T> n2,Integer saltos,HashSet<Vertice> visitados){
+    	ArrayList<T> resultado = new ArrayList<>();
+    	
+    	if(saltos.equals(1)) { 
+    		for(Arista<T> auxAristas : this.aristas) {	
+    			if((auxAristas.getInicio() == n1) && (auxAristas.getFin() == n2)) {
+    					resultado.add(n1.getValor());
+    					resultado.add(n2.getValor());
+        				return resultado;
+    			}
+    		}
+    		if(resultado.isEmpty()) {    			
+    			visitados.clear();
+    			return (new ArrayList<T>());
+    		}
+    	} else {
+    		resultado.add(n1.getValor());
+    		visitados.add(n1);
+        	ArrayList<T> listaAux = new ArrayList<>();
+        	for(Vertice<T> auxVertices : this.getAdyacentes(n1)) {
+    			if(!visitados.contains(auxVertices)) {
+    				listaAux = (ArrayList<T>) buscarCaminoNSaltos(auxVertices, n2, (saltos-1), visitados);
+    				if(!listaAux.isEmpty()) {
+    					resultado.addAll(listaAux);
+        				return resultado;
+    				}
+    			}
+    		}
+    		return listaAux;
+    	}
+		return resultado;
     }
-
-
 }
