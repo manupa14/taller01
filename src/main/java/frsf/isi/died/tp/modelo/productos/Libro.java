@@ -5,7 +5,12 @@
  */
 package frsf.isi.died.tp.modelo.productos;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -34,7 +39,7 @@ public class Libro extends MaterialCapacitacion {
 	 * @param titulo es el titulo del libro
 	 */
 	public Libro(Integer id, String titulo) {
-		this(id, titulo,0.0,0.0,0);
+		this(id, titulo,0.0,0.0,0,0,null,null);
 	}
 
 	/**
@@ -45,8 +50,15 @@ public class Libro extends MaterialCapacitacion {
 	 * @param precioCompra es el precio al que se adquirió el libro a la editorial
 	 * @param paginas cantidad de paginas del libro
 	 */
+	
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		super(id, titulo, costo);
+		super(id, titulo, costo, 0, null, null);
+		this.precioCompra = precioCompra;
+		this.paginas = paginas;
+	}
+	
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Integer calificacion, Date fechaPub, Relevancia relevancia) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
@@ -120,5 +132,38 @@ public class Libro extends MaterialCapacitacion {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public List<String> asCsvRow() {
+		List<String> lista = new ArrayList<String>();
+		lista.add(this.id+"");
+		lista.add("\""+this.titulo.toString()+"\"");
+		lista.add(this.costo.toString());
+		lista.add(this.paginas.toString());
+		lista.add(this.precioCompra.toString());
+		lista.add(this.calificacion.toString());
+		lista.add(this.fechaPub.toString());
+		lista.add(this.relevancia.toString());
+		return lista;
+	}
+	
+	@Override
+	public void loadFromStringRow(List<String> datos) {
+		this.id =Integer.valueOf(datos.get(0));
+		this.titulo = datos.get(1);
+		this.costo =Double.valueOf(datos.get(2));
+		this.paginas =Integer.valueOf(datos.get(3));
+		this.precioCompra =Double.valueOf(datos.get(4));
+		this.calificacion =Integer.valueOf(datos.get(5));
+		try {
+			SimpleDateFormat formato = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
+			this.fechaPub = formato.parse(datos.get(6));
+		} catch (java.text.ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+		}
+		
+		this.relevancia =Relevancia.valueOf(datos.get(7));
 	}
 }

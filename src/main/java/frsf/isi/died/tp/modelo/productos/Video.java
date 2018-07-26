@@ -1,5 +1,9 @@
 package frsf.isi.died.tp.modelo.productos;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class Video extends MaterialCapacitacion {
 	
 	private static final Double costoSegundo=0.15;
@@ -24,13 +28,20 @@ public class Video extends MaterialCapacitacion {
 	}
 
 	public Video(Integer id,String titulo, Double costo) {
-		super(id, titulo);
-		super.costo= costo;
+		super(id, titulo, costo, 0, null, null);
+	}
+	
+	public Video(Integer id,String titulo, Double costo, Integer duracion) {
+		super(id, titulo, costo, 0, null, null);
+		this.setDuracion(duracion);
+	}
+	
+	public Video(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia);
 	}
 
-	public Video(Integer id,String titulo, Double costo, Integer duracion) {
-		super(id, titulo);
-		super.costo=costo;
+	public Video(Integer id,String titulo, Double costo, Integer duracion, Integer calificacion, Date fechaPub, Relevancia relevancia) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia);
 		this.setDuracion(duracion);
 	}
 	
@@ -59,5 +70,24 @@ public class Video extends MaterialCapacitacion {
 		} else {
 			return false;
 		}
+	}
+	
+	@Override
+	public List<String> asCsvRow() {
+		List<String> lista = new ArrayList<String>();
+		lista.add(this.id+"");
+		lista.add("\""+this.titulo.toString()+"\"");
+		lista.add(this.costo.toString());
+		lista.add(this.duracion.toString());
+		return lista;
+	}
+	
+
+	@Override
+	public void loadFromStringRow(List<String> datos) {
+		this.id =Integer.valueOf(datos.get(0));
+		this.titulo = datos.get(1);
+		this.costo =Double.valueOf(datos.get(2));
+		this.duracion =Integer.valueOf(datos.get(3));
 	}
 }

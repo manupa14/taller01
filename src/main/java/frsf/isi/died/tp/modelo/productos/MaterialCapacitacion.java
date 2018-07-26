@@ -6,7 +6,10 @@
 package frsf.isi.died.tp.modelo.productos;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import frsf.isi.died.app.dao.util.CsvRecord;
 import frsf.isi.died.tp.util.Ordenable;
 
 /**
@@ -23,7 +26,7 @@ import frsf.isi.died.tp.util.Ordenable;
  */
 
 
-public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>{
+public abstract class MaterialCapacitacion implements Ordenable, Comparable<MaterialCapacitacion>, CsvRecord{
 	
 	protected Integer id;
 	/**
@@ -37,12 +40,40 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 */
 	protected Double costo;
 	
+	protected Integer calificacion;
+	protected Date fechaPub;
+	protected Relevancia relevancia;
+	
+
+	public Integer getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Integer calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public Date getFechaPub() {
+		return fechaPub;
+	}
+
+	public void setFechaPub(Date fechaPub) {
+		this.fechaPub = fechaPub;
+	}
+
+	public Relevancia getRelevancia() {
+		return relevancia;
+	}
+
+	public void setRelevancia(Relevancia relevancia) {
+		this.relevancia = relevancia;
+	}
 
 	/**
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0);
+		this(0,"en desarrollo",0.0,0,null,null);
 	}
 
 	/**
@@ -52,7 +83,11 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param titulo
 	 */
 	public MaterialCapacitacion(Integer id, String titulo) {
-		this(id,titulo,0.0);
+		this(id,titulo,0.0,0,null,null);
+	}
+	
+	public MaterialCapacitacion(Integer id, String titulo, Double costo) {
+		this(id,titulo,costo,0,null,null);
 	}
 
 	/**
@@ -61,7 +96,10 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia) {
+		this.calificacion = calificacion;
+		this.fechaPub = fechaPub;
+		this.relevancia = relevancia;
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
@@ -167,4 +205,6 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 			return this.titulo.compareToIgnoreCase(Aux.getTitulo());
 		}
 	}
+
+	
 }
