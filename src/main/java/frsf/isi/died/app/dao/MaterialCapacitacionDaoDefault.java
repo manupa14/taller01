@@ -1,7 +1,9 @@
 package frsf.isi.died.app.dao;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
@@ -10,12 +12,14 @@ import frsf.isi.died.tp.modelo.Biblioteca;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
+import frsf.isi.died.tp.modelo.productos.Relevancia;
 import frsf.isi.died.tp.modelo.productos.Video;
 
 public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 	private static Grafo<MaterialCapacitacion> GRAFO_MATERIAL  = new Grafo<MaterialCapacitacion>();
-	private static Integer SECUENCIA_ID=0;
+	private static Integer SECUENCIA_IDLIBRO=0;
+	private static Integer SECUENCIA_IDVIDEO=0;
 	private static Biblioteca biblioteca = new BibliotecaABB();
 	
 	private CsvDatasource dataSource;
@@ -50,7 +54,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	
 	@Override
 	public void agregarLibro(Libro mat) {
-		mat.setId(++SECUENCIA_ID);
+		mat.setId(++SECUENCIA_IDLIBRO);
 		GRAFO_MATERIAL.addNodo(mat);	
 		biblioteca.agregar(mat);
 		try {
@@ -60,10 +64,46 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			e.printStackTrace();
 		}
 	}
-
+	
+	@Override
+	public void borrarLibro(Libro mat) {
+		List<List<String>> libros = dataSource.readFile("libros.csv");
+		boolean encontrado=false;
+		int contador=0;
+		
+		for(List<String> aux : libros) {
+			
+			Libro libroAux = new Libro();
+			libroAux.loadFromStringRow(aux);
+			
+			if(libroAux.getId() == mat.getId()) {
+				encontrado=true;
+				break;
+			} 
+			contador++;
+		}
+		
+		if(encontrado) {
+			libros.remove(contador);
+		}
+		
+		dataSource.borrarArchivo("libros.csv");
+		
+		for(List<String> aux2 : libros) {
+			Libro libroAux = new Libro();
+			libroAux.loadFromStringRow(aux2);
+			try {
+				dataSource.agregarFilaAlFinal("libros.csv", libroAux);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	@Override
 	public void agregarVideo(Video mat) {
-		mat.setId(++SECUENCIA_ID);
+		mat.setId(++SECUENCIA_IDVIDEO);
 		GRAFO_MATERIAL.addNodo(mat);				
 		biblioteca.agregar(mat);
 		try {
@@ -71,6 +111,42 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void borrarVideo(Video mat) {
+		List<List<String>> videos = dataSource.readFile("videos.csv");
+		boolean encontrado=false;
+		int contador=0;
+		
+		for(List<String> aux : videos) {
+			
+			Video videoAux = new Video();
+			videoAux.loadFromStringRow(aux);
+			
+			if(videoAux.getId() == mat.getId()) {
+				encontrado=true;
+				break;
+			} 
+			contador++;
+		}
+		
+		if(encontrado) {
+			videos.remove(contador);
+		}
+		
+		dataSource.borrarArchivo("videos.csv");
+		
+		for(List<String> aux2 : videos) {
+			Video videoAux = new Video();
+			videoAux.loadFromStringRow(aux2);
+			try {
+				dataSource.agregarFilaAlFinal("videos.csv", videoAux);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 

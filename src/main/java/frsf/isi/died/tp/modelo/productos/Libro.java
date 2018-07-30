@@ -143,7 +143,12 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.paginas.toString());
 		lista.add(this.precioCompra.toString());
 		lista.add(this.calificacion.toString());
-		lista.add(this.fechaPub.toString());
+		
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		String aux;
+		aux = formato.format(this.fechaPub);
+		lista.add(aux);
+		
 		lista.add(this.relevancia.toString());
 		return lista;
 	}
@@ -156,14 +161,10 @@ public class Libro extends MaterialCapacitacion {
 		this.paginas =Integer.valueOf(datos.get(3));
 		this.precioCompra =Double.valueOf(datos.get(4));
 		this.calificacion =Integer.valueOf(datos.get(5));
-		try {
-			SimpleDateFormat formato = new SimpleDateFormat("EEE MMM d HH:mm:ss z yyyy");
-			this.fechaPub = formato.parse(datos.get(6));
-		} catch (java.text.ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-		}
-		
+		/*
+		 * FALTA LA FECHA	
+		 */
+		this.fechaPub = new Date();
 		this.relevancia =Relevancia.valueOf(datos.get(7));
 	}
 }

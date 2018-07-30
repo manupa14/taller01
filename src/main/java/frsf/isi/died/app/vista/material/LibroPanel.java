@@ -2,6 +2,8 @@ package frsf.isi.died.app.vista.material;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class LibroPanel extends JPanel{
 	private JTextField txtRelevancia;
 	private JButton btnAgregar;
 	private JButton btnCancelar;
-
+	private JButton btnBorrar;
 	private LibroTableModel tableModel;
 
 	private LibroController controller;
@@ -70,9 +72,10 @@ public class LibroPanel extends JPanel{
 				Double precio = Double.valueOf(txtPrecioCompra.getText());
 				Integer paginas = Integer.valueOf(txtPaginas.getText());
 				Integer calificacion = Integer.valueOf(txtCalificacion.getText());
-				
+
+				Date fechaPub = new Date();
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				Date fechaPub = formato.parse(txtFechaPub.getText());
+				fechaPub = formato.parse(txtFechaPub.getText());
 				
 				Relevancia relevancia = Relevancia.valueOf(txtRelevancia.getText());
 				
@@ -93,7 +96,6 @@ public class LibroPanel extends JPanel{
 		gridConst.anchor = GridBagConstraints.LINE_START;
 		gridConst.gridx=12;
 		this.add(btnAgregar, gridConst);
-		
 		
 		lblCosto= new JLabel("Costo: ");		
 		gridConst.gridx=0;

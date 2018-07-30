@@ -89,4 +89,10 @@ public class BibliotecaList implements Biblioteca {
 			throw new RuntimeException ("Material de precio " + costo + " no encontrado");
 		}
 	}
+
+	@Override
+	public void borrar(MaterialCapacitacion material) {
+		// TODO Auto-generated method stub
+		
+	}
 }

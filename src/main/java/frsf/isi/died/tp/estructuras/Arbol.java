@@ -9,6 +9,8 @@ public abstract class Arbol {
 	public abstract boolean esVacio();
 
 	public abstract void add(MaterialCapacitacion mat);
+	
+	public abstract void borrar(MaterialCapacitacion mat);
 
 	public abstract Arbol izquierdo();
 

@@ -33,11 +33,28 @@ public class Principal {
 	        menuItem = new JMenuItem("Nuevo Libro");
 	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.ABM_LIBROS));
 	        menu.add(menuItem);
+	        
+	        menuItem = new JMenuItem("Actualizar Libro");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.ACTUALIZAR_LIBRO));
+	        menu.add(menuItem);
 
+	        menuItem = new JMenuItem("Borrar Libro");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.BORRAR_LIBRO));
+	        menu.add(menuItem);
+	        menu.addSeparator();
 	        menuItem = new JMenuItem("Nuevo Video");
 	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.ABM_VIDEOS));
 	        menu.add(menuItem);
+	        
+	        menuItem = new JMenuItem("Actualizar Video");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.ACTUALIZAR_VIDEO));
+	        menu.add(menuItem);
+	        
+	        menuItem = new JMenuItem("Borrar Video");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.BORRAR_VIDEO));
+	        menu.add(menuItem);
 	        menu.addSeparator();
+	        
 	        menuItem = new JMenuItem("Salir");
 	        menuItem.addActionListener(e->System.exit(99));
 	        menu.add(menuItem);

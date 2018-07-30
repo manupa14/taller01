@@ -79,9 +79,11 @@ public class Video extends MaterialCapacitacion {
 		lista.add("\""+this.titulo.toString()+"\"");
 		lista.add(this.costo.toString());
 		lista.add(this.duracion.toString());
+		lista.add(this.calificacion.toString());
+		lista.add(this.fechaPub.toString());
+		lista.add(this.relevancia.toString());
 		return lista;
 	}
-	
 
 	@Override
 	public void loadFromStringRow(List<String> datos) {
@@ -89,5 +91,11 @@ public class Video extends MaterialCapacitacion {
 		this.titulo = datos.get(1);
 		this.costo =Double.valueOf(datos.get(2));
 		this.duracion =Integer.valueOf(datos.get(3));
+		this.calificacion = Integer.valueOf(datos.get(4));
+		/*
+		 * FALTA IMPLEMENTAR LA FECHA
+		 */
+		this.fechaPub = new Date();
+		this.relevancia = Relevancia.valueOf(datos.get(6));
 	}
 }

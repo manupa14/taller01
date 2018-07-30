@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 
 import frsf.isi.died.app.vista.grafo.ControlPanel;
 import frsf.isi.died.app.vista.grafo.GrafoPanel;
+import frsf.isi.died.app.vista.material.BorrarLibroPanel;
+import frsf.isi.died.app.vista.material.BorrarVideoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
 
@@ -32,6 +34,18 @@ public class MenuController {
 			controllervid.crearPanel();
 			framePrincipal.setContentPane(controllervid.getPanelVideo());
 			break;
+		case BORRAR_LIBRO:
+			BorrarLibroPanel panelBorrarLibros = new BorrarLibroPanel();
+			BorrarLibroController controllerBorrarLibro = new BorrarLibroController(panelBorrarLibros);
+			controllerBorrarLibro.crearPanelBorrarLibros();
+			framePrincipal.setContentPane(controllerBorrarLibro.getPanelBorrarLibro());
+			break;
+		case BORRAR_VIDEO:
+			BorrarVideoPanel panelBorrarVideos = new BorrarVideoPanel();
+			BorrarVideoController controllerBorrarVideo = new BorrarVideoController(panelBorrarVideos);
+			controllerBorrarVideo.crearPanelBorrarVideos();
+			framePrincipal.setContentPane(controllerBorrarVideo.getPanelBorrarVideo());
+			break;
 		case VER_GRAFO:
 			JPanel panel = new JPanel(new BorderLayout());
 			ControlPanel controlPanel = new ControlPanel();
@@ -41,7 +55,7 @@ public class MenuController {
 			panel.add(grafoPanel , BorderLayout.CENTER);
 			
 			framePrincipal.setContentPane(panel);
-			break;			
+			break;
 		default:
 			break;
 		}

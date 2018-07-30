@@ -9,7 +9,9 @@ import frsf.isi.died.tp.modelo.productos.Video;
 public interface MaterialCapacitacionDao {
 
 	public void agregarLibro(Libro mat);
+	public void borrarLibro(Libro mat);
 	public void agregarVideo(Video mat);
+	public void borrarVideo(Video mat);
 	public List<Libro> listaLibros();
 	public List<Video> listaVideos();
 	public List<MaterialCapacitacion> listaMateriales();

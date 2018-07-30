@@ -111,5 +111,11 @@ public class BibliotecaArray implements Biblioteca{
 		return null;
 	}
 
+	@Override
+	public void borrar(MaterialCapacitacion material) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

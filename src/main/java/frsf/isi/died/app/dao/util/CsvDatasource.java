@@ -2,12 +2,16 @@ package frsf.isi.died.app.dao.util;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import frsf.isi.died.tp.modelo.productos.Libro;
 
 public class CsvDatasource {
 
@@ -131,6 +135,11 @@ public class CsvDatasource {
 		writer.flush();
 		writer.close();
 
+	}
+	
+	public void borrarArchivo(String archivoCsv) {
+		File files = new File(archivoCsv);
+		files.delete();
 	}
 
 	// https://tools.ietf.org/html/rfc4180

@@ -42,6 +42,14 @@ public class Grafo<T> {
 		this.vertices.add(nodo);
 	}
 	
+	public void borrarNodo(T nodo) {
+		this.borrarNodo(new Vertice<T>(nodo));
+	}
+	
+	public void borrarNodo(Vertice<T> nodo) {
+		this.vertices.remove(nodo);
+	}
+	
 	/**
 	 * @param n1
 	 * @param n2

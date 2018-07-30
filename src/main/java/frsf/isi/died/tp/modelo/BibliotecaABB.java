@@ -29,6 +29,10 @@ public class BibliotecaABB implements Biblioteca {
 		}
 	}
 	
+	public void borrar(MaterialCapacitacion material) {
+		
+	}
+	
 	@Override
 	public Integer cantidadMateriales() {
 		return materiales.tamanio();

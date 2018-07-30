@@ -81,6 +81,18 @@ public class ArbolBinarioBusqueda extends Arbol {
 		}
 	}
 	
+	public void borrar(MaterialCapacitacion mat) {
+		if(this.valor==mat) {
+			this.valor = null;
+		} else {
+			if(this.comparador.compare(mat, this.valor) > 0) {
+				this.derecho.borrar(mat);
+			} else {
+				this.izquierdo.borrar(mat);
+			}
+		}
+	}
+	
 	@Override
 	public void imprimir() {
 		this.inOrden().stream().forEach(System.out::println);

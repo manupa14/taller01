@@ -89,6 +89,11 @@ public class ArbolVacio extends Arbol {
     public List<MaterialCapacitacion> rango(Double precio1, Double precio2) {
         return new ArrayList<MaterialCapacitacion>();
     }
+
+	@Override
+	public void borrar(MaterialCapacitacion mat) {
+		// TODO Auto-generated method stub
+	}
     
 
 
