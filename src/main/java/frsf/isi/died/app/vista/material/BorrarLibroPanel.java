@@ -50,6 +50,7 @@ public class BorrarLibroPanel extends JPanel{
 		
 		btnBorrar.addActionListener(e -> {
 			this.materialDAO.borrarLibro((Libro) comboBox.getSelectedItem());
+			
 		});	
 		
 	}
