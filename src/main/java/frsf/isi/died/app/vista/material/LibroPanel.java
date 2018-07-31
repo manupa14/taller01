@@ -73,9 +73,8 @@ public class LibroPanel extends JPanel{
 				Integer paginas = Integer.valueOf(txtPaginas.getText());
 				Integer calificacion = Integer.valueOf(txtCalificacion.getText());
 
-				Date fechaPub = new Date();
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-				fechaPub = formato.parse(txtFechaPub.getText());
+				Date fechaPub = formato.parse(txtFechaPub.getText());
 				
 				Relevancia relevancia = Relevancia.valueOf(txtRelevancia.getText());
 				

@@ -11,6 +11,7 @@ import frsf.isi.died.app.vista.material.ActualizarLibroPanel;
 import frsf.isi.died.app.vista.material.ActualizarVideoPanel;
 import frsf.isi.died.app.vista.material.BorrarLibroPanel;
 import frsf.isi.died.app.vista.material.BorrarVideoPanel;
+import frsf.isi.died.app.vista.material.BuscarLibroPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
 
@@ -59,6 +60,12 @@ public class MenuController {
 			ActualizarVideoController controllerActualizarVideo = new ActualizarVideoController(panelActualizarVideo);
 			controllerActualizarVideo.crearPanelActualizarVideo();
 			framePrincipal.setContentPane(controllerActualizarVideo.getPanelActualizarVideo());
+			break;
+		case BUSCAR_LIBRO:
+			BuscarLibroPanel panelBuscarLibro = new BuscarLibroPanel();
+			BuscarLibroController controllerBuscarLibro = new BuscarLibroController(panelBuscarLibro);
+			controllerBuscarLibro.crearPanelBuscarLibro();
+			framePrincipal.setContentPane(controllerBuscarLibro.getPanelBuscarLibro());
 			break;
 		case VER_GRAFO:
 			JPanel panel = new JPanel(new BorderLayout());

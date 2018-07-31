@@ -145,9 +145,7 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(this.calificacion.toString());
 		
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		String aux;
-		aux = formato.format(this.fechaPub);
-		lista.add(aux);
+		lista.add(formato.format(this.fechaPub));
 		
 		lista.add(this.relevancia.toString());
 		return lista;
@@ -164,7 +162,13 @@ public class Libro extends MaterialCapacitacion {
 		/*
 		 * FALTA LA FECHA	
 		 */
-		this.fechaPub = new Date();
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.fechaPub = formato.parse(datos.get(6));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.relevancia =Relevancia.valueOf(datos.get(7));
 	}
 }

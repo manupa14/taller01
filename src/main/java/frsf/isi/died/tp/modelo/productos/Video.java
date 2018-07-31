@@ -1,5 +1,8 @@
 package frsf.isi.died.tp.modelo.productos;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +83,10 @@ public class Video extends MaterialCapacitacion {
 		lista.add(this.costo.toString());
 		lista.add(this.duracion.toString());
 		lista.add(this.calificacion.toString());
-		lista.add(this.fechaPub.toString());
+		
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		lista.add(formato.format(this.fechaPub));
+		
 		lista.add(this.relevancia.toString());
 		return lista;
 	}
@@ -92,10 +98,15 @@ public class Video extends MaterialCapacitacion {
 		this.costo =Double.valueOf(datos.get(2));
 		this.duracion =Integer.valueOf(datos.get(3));
 		this.calificacion = Integer.valueOf(datos.get(4));
-		/*
-		 * FALTA IMPLEMENTAR LA FECHA
-		 */
-		this.fechaPub = new Date();
+		
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			this.fechaPub = formato.parse(datos.get(5));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.relevancia = Relevancia.valueOf(datos.get(6));
 	}
 }
