@@ -159,9 +159,7 @@ public class Libro extends MaterialCapacitacion {
 		this.paginas =Integer.valueOf(datos.get(3));
 		this.precioCompra =Double.valueOf(datos.get(4));
 		this.calificacion =Integer.valueOf(datos.get(5));
-		/*
-		 * FALTA LA FECHA	
-		 */
+
 		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			this.fechaPub = formato.parse(datos.get(6));

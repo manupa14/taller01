@@ -2,6 +2,8 @@ package frsf.isi.died.app.dao;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -102,6 +104,65 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	}
 	
 	@Override
+	public List<ArrayList<String>> buscarLibroPorTitulo(String dato){
+		List<List<String>> librosAux = dataSource.readFile("libros.csv");
+		List<ArrayList<String>> libros = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : librosAux) {
+			if(aux.get(1).equals(dato)) {
+				System.out.println(dato);
+				libros.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return libros;
+	}
+	
+	@Override
+	public List<ArrayList<String>> buscarLibroPorCalificacion(String dato) {
+		List<List<String>> librosAux = dataSource.readFile("libros.csv");
+		List<ArrayList<String>> libros = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : librosAux) {
+			if(aux.get(5).equals(dato)) {
+				System.out.println(dato);
+				libros.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return libros;
+	}
+	
+	@Override
+	public List<ArrayList<String>> buscarLibroPorFecha(String desde, String hasta){
+		List<List<String>> librosAux = dataSource.readFile("libros.csv");
+		List<ArrayList<String>> libros = new ArrayList<ArrayList<String>>();
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		
+		try {
+			Date fechaDesde = formato.parse(desde);
+			Date fechaHasta = formato.parse(hasta);
+		
+			for(List<String> aux : librosAux) {
+				Date fechaAux = formato.parse(aux.get(6));
+					
+				if(fechaAux.equals(fechaDesde) || fechaAux.equals(fechaHasta)) {
+					libros.add((ArrayList<String>) aux);
+				} else {
+					if(fechaAux.after(fechaDesde) && fechaAux.before(fechaHasta)) {
+						libros.add((ArrayList<String>) aux);
+					}
+				}
+			}
+		} catch (ParseException e) {
+				e.printStackTrace();
+		}
+		
+		return libros;
+	}
+	
+	@Override
 	public void agregarVideo(Video mat) {
 		mat.setId(++SECUENCIA_IDVIDEO);
 		GRAFO_MATERIAL.addNodo(mat);				
@@ -149,7 +210,66 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			}
 		}
 	}
+	
+	@Override
+	public List<ArrayList<String>> buscarVideoPorTitulo(String dato){
+		List<List<String>> videosAux = dataSource.readFile("videos.csv");
+		List<ArrayList<String>> videos = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : videosAux) {
+			if(aux.get(1).equals(dato)) {
+				System.out.println(dato);
+				videos.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return videos;
+	}
 
+	@Override
+	public List<ArrayList<String>> buscarVideoPorCalificacion(String dato) {
+		List<List<String>> videosAux = dataSource.readFile("videos.csv");
+		List<ArrayList<String>> videos = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : videosAux) {
+			if(aux.get(4).equals(dato)) {
+				System.out.println(dato);
+				videos.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return videos;
+	}
+	
+	@Override
+	public List<ArrayList<String>> buscarVideoPorFecha(String desde, String hasta){
+		List<List<String>> videosAux = dataSource.readFile("videos.csv");
+		List<ArrayList<String>> videos = new ArrayList<ArrayList<String>>();
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		
+		try {
+			Date fechaDesde = formato.parse(desde);
+			Date fechaHasta = formato.parse(hasta);
+		
+			for(List<String> aux : videosAux) {
+				Date fechaAux = formato.parse(aux.get(5));
+					
+				if(fechaAux.equals(fechaDesde) || fechaAux.equals(fechaHasta)) {
+					videos.add((ArrayList<String>) aux);
+				} else {
+					if(fechaAux.after(fechaDesde) && fechaAux.before(fechaHasta)) {
+						videos.add((ArrayList<String>) aux);
+					}
+				}
+			}
+		} catch (ParseException e) {
+				e.printStackTrace();
+		}
+		
+		return videos;
+	}
+	
 	@Override
 	public List<Libro> listaLibros() {
 		List<Libro> libros = new ArrayList<>();

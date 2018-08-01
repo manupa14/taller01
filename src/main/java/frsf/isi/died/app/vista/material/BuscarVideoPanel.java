@@ -19,12 +19,12 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
-import frsf.isi.died.tp.modelo.productos.Libro;
-import frsf.isi.died.app.controller.BuscarLibroController;
+import frsf.isi.died.tp.modelo.productos.Video;
+import frsf.isi.died.app.controller.BuscarVideoController;
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
 
-public class BuscarLibroPanel extends JPanel{
+public class BuscarVideoPanel extends JPanel{
 	
 	private JScrollPane scrollPane;
 	private JLabel lblTitulo;
@@ -32,11 +32,11 @@ public class BuscarLibroPanel extends JPanel{
 	private JButton btnBuscar;
 	private JTable tabla;
 	
-	private BuscarLibroController controller;
+	private BuscarVideoController controller;
 	
 	private List<ArrayList<String>> resultadoBusqueda;
 
-	public BuscarLibroPanel() {
+	public BuscarVideoPanel() {
 		this.setLayout(new GridBagLayout());
 	}
 	
@@ -47,9 +47,8 @@ public class BuscarLibroPanel extends JPanel{
 		DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
         model.addColumn("Titulo");
-        model.addColumn("Precio Compra");
         model.addColumn("Costo Publicacion");
-        model.addColumn("Paginas");
+        model.addColumn("Duracion");
         model.addColumn("Calificacion");
         model.addColumn("Fecha de Publicacion");
         model.addColumn("Relevancia");
@@ -71,18 +70,18 @@ public class BuscarLibroPanel extends JPanel{
 			switch((String) comboBox.getSelectedItem()) {
 			case "Titulo":
 				String respuestaTitulo = JOptionPane.showInputDialog("Ingrese Titulo a buscar");
-				resultadoBusqueda = controller.buscarLibroPorTitulo(respuestaTitulo);
+				resultadoBusqueda = controller.buscarVideoPorTitulo(respuestaTitulo);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
 		        }
 				break;
 			case "Calificacion":
 				String respuestaCalificacion = JOptionPane.showInputDialog("Ingrese Calificacion a buscar");
-				resultadoBusqueda = controller.buscarLibroPorCalificacion(respuestaCalificacion);
+				resultadoBusqueda = controller.buscarVideoPorCalificacion(respuestaCalificacion);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
 		        }
 				break;
 			case "Fecha de publicacion":
@@ -90,10 +89,10 @@ public class BuscarLibroPanel extends JPanel{
 				
 				String respuestaFechaDesde = JOptionPane.showInputDialog("Ingrese desde que fecha");
 				String respuestaFechaHasta = JOptionPane.showInputDialog("Ingrese hasta que fecha");
-				resultadoBusqueda = controller.buscarLibroPorFecha(respuestaFechaDesde, respuestaFechaHasta);
+				resultadoBusqueda = controller.buscarVideoPorFecha(respuestaFechaDesde, respuestaFechaHasta);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
 		        }
 				try {
 					Date fechaDesde = formato.parse(respuestaFechaDesde);
@@ -115,16 +114,14 @@ public class BuscarLibroPanel extends JPanel{
 		
 		int indiceID = 0;
 		int indiceTitulo = 1;
-		int indicePrecioCompra = 2;
-		int indiceCostoPub = 3;
-		int indicePaginas = 4;
-		int indiceCalificacion = 5;
-		int indiceFecha = 6;
-		int indiceRelevancia = 7;
+		int indiceCostoPub = 2;
+		int indiceDuracion = 3;
+		int indiceCalificacion = 4;
+		int indiceFecha = 5;
+		int indiceRelevancia = 6;
 		
 		sorter.setSortable(indiceID, false);
-		sorter.setSortable(indiceCostoPub, false);
-		sorter.setSortable(indicePaginas, false);
+		sorter.setSortable(indiceDuracion, false);
 		
 		sorter.setComparator(indiceTitulo, new Comparator<String>() {
 			 @Override
@@ -136,11 +133,17 @@ public class BuscarLibroPanel extends JPanel{
 		sorter.setComparator(indiceCalificacion, new Comparator<String>() {
 			@Override
 			public int compare(String name1, String name2) {
-				return name1.compareTo(name2);
+				if(name1.length() > name2.length()) {
+					return 1;
+				} if(name1.length() == name2.length()) {
+					return name1.compareTo(name2);
+				} else {
+					return -1;
+				}
 			}
 		});
 		
-		sorter.setComparator(indicePrecioCompra, new Comparator<String>() {
+		sorter.setComparator(indiceCostoPub, new Comparator<String>() {
 			@Override
 			public int compare(String name1, String name2) {
 				return name1.compareTo(name2);
@@ -216,11 +219,12 @@ public class BuscarLibroPanel extends JPanel{
 		this.add(scrollPane, gridConst);
 	}
 	
-	public void setController(BuscarLibroController controller) {
+	public void setController(BuscarVideoController controller) {
 		this.controller = controller;
 	}
 	
-	public BuscarLibroController getController() {
+	public BuscarVideoController getController() {
 		return controller;
 	}
 }
+
