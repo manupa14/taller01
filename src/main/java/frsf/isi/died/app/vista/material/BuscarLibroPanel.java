@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import frsf.isi.died.tp.modelo.productos.Libro;
+import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.app.controller.BuscarLibroController;
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
@@ -30,11 +33,14 @@ public class BuscarLibroPanel extends JPanel{
 	private JLabel lblTitulo;
 	private JComboBox comboBox;
 	private JButton btnBuscar;
+	private JButton btnAgregar;
 	private JTable tabla;
 	
 	private BuscarLibroController controller;
 	
 	private List<ArrayList<String>> resultadoBusqueda;
+	
+	private MaterialCapacitacionDao materialDAO;
 
 	public BuscarLibroPanel() {
 		this.setLayout(new GridBagLayout());
@@ -43,6 +49,8 @@ public class BuscarLibroPanel extends JPanel{
 	public void construir() {
 		
 		GridBagConstraints gridConst = new GridBagConstraints();
+		
+		this.materialDAO = new MaterialCapacitacionDaoDefault();
 		
 		DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
@@ -107,6 +115,18 @@ public class BuscarLibroPanel extends JPanel{
 		});
 		gridConst.gridx=2;
 		this.add(btnBuscar, gridConst);
+		
+		btnAgregar = new JButton("Agregar a Wishlist");
+		btnAgregar.addActionListener(e -> {
+			Libro aux = new Libro();
+			aux.loadFromStringRow(resultadoBusqueda.get(tabla.getSelectedRow()));
+			
+			materialDAO.agregarAWishlist(aux);
+			
+			JOptionPane.showMessageDialog(this, "Se agrego el libro a la wishlist correctamente");
+		});
+		gridConst.gridx=3;
+		this.add(btnAgregar, gridConst);
         
 		tabla = new JTable(model);
 		tabla.setFillsViewportHeight(true);

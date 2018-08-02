@@ -7,11 +7,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import frsf.isi.died.app.dao.util.CsvDatasource;
 import frsf.isi.died.tp.estructuras.Grafo;
 import frsf.isi.died.tp.modelo.Biblioteca;
 import frsf.isi.died.tp.modelo.BibliotecaABB;
+import frsf.isi.died.tp.modelo.ComparadorMateriales;
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.tp.modelo.productos.Relevancia;
@@ -53,6 +55,35 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			GRAFO_MATERIAL.conectar(n1, n2);
 		}
  	}
+	
+	@Override
+	public void agregarAWishlist(MaterialCapacitacion material) {
+		try {
+			dataSource.agregarFilaAlFinal("wishlist.csv", material);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public PriorityQueue<MaterialCapacitacion> getWishlist() {
+		PriorityQueue<MaterialCapacitacion> wishlist = new PriorityQueue<MaterialCapacitacion>(10, new ComparadorMateriales());
+		List<List<String>> wishlistAux = dataSource.readFile("wishlist.csv");
+		
+		for(List<String> aux : wishlistAux) {
+			if(aux.size() == 7) {
+				Video videoAux = new Video();
+				videoAux.loadFromStringRow(aux);
+				wishlist.add(videoAux);
+			} else {
+				Libro libroAux = new Libro();
+				libroAux.loadFromStringRow(aux);
+				wishlist.add(libroAux);
+			}
+		}
+		
+		return wishlist;
+	}
 	
 	@Override
 	public void agregarLibro(Libro mat) {
@@ -327,6 +358,4 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 			e.printStackTrace();
 		}
 	}
-
-	
 }

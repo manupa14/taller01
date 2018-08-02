@@ -64,6 +64,11 @@ public class Principal {
 	        menu.add(menuItem);
 	        menu.addSeparator();
 	        
+	        menuItem = new JMenuItem("Ver Wishlist");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.WISHLIST));
+	        menu.add(menuItem);
+	        menu.addSeparator();
+	        
 	        menuItem = new JMenuItem("Salir");
 	        menuItem.addActionListener(e->System.exit(99));
 	        menu.add(menuItem);

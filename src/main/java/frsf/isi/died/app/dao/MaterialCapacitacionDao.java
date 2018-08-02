@@ -2,6 +2,7 @@ package frsf.isi.died.app.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
@@ -19,6 +20,8 @@ public interface MaterialCapacitacionDao {
 	public List<ArrayList<String>> buscarVideoPorTitulo(String dato);
 	public List<ArrayList<String>> buscarVideoPorCalificacion(String dato);
 	public List<ArrayList<String>> buscarVideoPorFecha(String desde, String hasta);
+	public void agregarAWishlist(MaterialCapacitacion material);
+	public PriorityQueue<MaterialCapacitacion> getWishlist();
 	public List<Libro> listaLibros();
 	public List<Video> listaVideos();
 	public List<MaterialCapacitacion> listaMateriales();

@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+import frsf.isi.died.tp.modelo.productos.Libro;
 import frsf.isi.died.tp.modelo.productos.Video;
 import frsf.isi.died.app.controller.BuscarVideoController;
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
@@ -30,11 +31,14 @@ public class BuscarVideoPanel extends JPanel{
 	private JLabel lblTitulo;
 	private JComboBox comboBox;
 	private JButton btnBuscar;
+	private JButton btnAgregar;
 	private JTable tabla;
 	
 	private BuscarVideoController controller;
 	
 	private List<ArrayList<String>> resultadoBusqueda;
+	
+	private MaterialCapacitacionDao materialDAO;
 
 	public BuscarVideoPanel() {
 		this.setLayout(new GridBagLayout());
@@ -43,6 +47,8 @@ public class BuscarVideoPanel extends JPanel{
 	public void construir() {
 		
 		GridBagConstraints gridConst = new GridBagConstraints();
+		
+		materialDAO = new MaterialCapacitacionDaoDefault();
 		
 		DefaultTableModel model = new DefaultTableModel();
         model.addColumn("ID");
@@ -106,6 +112,18 @@ public class BuscarVideoPanel extends JPanel{
 		});
 		gridConst.gridx=2;
 		this.add(btnBuscar, gridConst);
+		
+		btnAgregar = new JButton("Agregar a Wishlist");
+		btnAgregar.addActionListener(e -> {
+			Video aux = new Video();
+			aux.loadFromStringRow(resultadoBusqueda.get(tabla.getSelectedRow()));
+			
+			materialDAO.agregarAWishlist(aux);
+			
+			JOptionPane.showMessageDialog(this, "Se agrego el video a la wishlist correctamente");
+		});
+		gridConst.gridx=3;
+		this.add(btnAgregar, gridConst);
         
 		tabla = new JTable(model);
 		tabla.setFillsViewportHeight(true);
