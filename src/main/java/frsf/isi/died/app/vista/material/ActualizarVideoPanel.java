@@ -28,12 +28,14 @@ public class ActualizarVideoPanel extends JPanel{
 	private JLabel lblCalificacion;
 	private JLabel lblFechaPub;
 	private JLabel lblRelevancia;
+	private JLabel lblTema;
 	private JTextField txtTitulo;
 	private JTextField txtCosto;
 	private JTextField txtDuracion;
 	private JTextField txtCalificacion;
 	private JTextField txtFechaPub;
 	private JTextField txtRelevancia;
+	private JTextField txtTema;
 	private JButton btnSeleccionar;
 	private JComboBox comboBox;
 	
@@ -73,15 +75,18 @@ public class ActualizarVideoPanel extends JPanel{
 				Date fechaPub = formato.parse(txtFechaPub.getText());
 				
 				Relevancia relevancia = Relevancia.valueOf(txtRelevancia.getText());
+				String tema = String.valueOf(txtTema.getText());
 			
 				this.materialDAO.borrarVideo((Video) comboBox.getSelectedItem());
-				controller.agregarVideo(txtTitulo.getText(), costo, duracion, calificacion, fechaPub, relevancia);
+				controller.agregarVideo(txtTitulo.getText(), costo, duracion, calificacion, fechaPub, relevancia, tema);
 				txtTitulo.setText("");
 				txtCosto.setText("");
 				txtDuracion.setText("");
 				txtCalificacion.setText("");
 				txtFechaPub.setText("");
 				txtRelevancia.setText("");
+				txtTema.setText("");
+				JOptionPane.showMessageDialog(this, "Se actualizo el video correctamente, reiniciar para completar los cambios");
 			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -101,6 +106,15 @@ public class ActualizarVideoPanel extends JPanel{
 		gridConst.gridx=1;
 		gridConst.gridwidth=5;
 		this.add(txtTitulo, gridConst);
+		
+		lblTema = new JLabel("Tema: ");
+		gridConst.gridx=6;
+		this.add(lblTema, gridConst);
+		
+		txtTema = new JTextField();
+		txtTema.setColumns(7);
+		gridConst.gridx=7;
+		this.add(txtTema, gridConst);
 		
 		lblCosto = new JLabel("Costo: ");
 		gridConst.gridx=0;

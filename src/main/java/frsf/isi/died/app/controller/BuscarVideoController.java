@@ -28,6 +28,10 @@ public class BuscarVideoController {
 		return materialDAO.buscarVideoPorCalificacion(dato);
 	}
 	
+	public List<ArrayList<String>> buscarVideoPorTema(String dato) {
+		return materialDAO.buscarVideoPorTema(dato);
+	}
+	
 	public List<ArrayList<String>> buscarVideoPorFecha(String desde, String hasta) {
 		return materialDAO.buscarVideoPorFecha(desde, hasta);
 	}

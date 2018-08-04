@@ -19,8 +19,9 @@ public class ActualizarVideoController {
 		materialDAO = new MaterialCapacitacionDaoDefault();
 	}
 	
-	public void agregarVideo(String titulo,Double costo,Integer duracion, Integer calificacion, Date fechaPub, Relevancia relevancia) {	
-		Video v = new Video(0,titulo, costo, duracion, calificacion, fechaPub, relevancia);
+	public void agregarVideo(String titulo,Double costo,Integer duracion, Integer calificacion, Date fechaPub, Relevancia relevancia, String tema) {	
+		Video v = new Video(0,titulo, costo, duracion, calificacion, fechaPub, relevancia, tema);
+		v.setPageRank(1.0);
 		materialDAO .agregarVideo(v);
 	}
 	

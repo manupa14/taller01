@@ -47,9 +47,10 @@ public class WishlistPanel extends JPanel{
         model.addColumn("Calificacion");
         model.addColumn("Fecha Publicacion");
         model.addColumn("Relevancia");
+        model.addColumn("Tema");
         
         for(MaterialCapacitacion aux : wishlist) {
-        	model.addRow(new Object[] {aux.getId(), aux.getTitulo(), aux.precio(), aux.getCosto(), aux.getCalificacion(), aux.getFechaPub(), aux.getRelevancia()});
+        	model.addRow(new Object[] {aux.getId(), aux.getTitulo(), aux.precio(), aux.getCosto(), aux.getCalificacion(), aux.getFechaPub(), aux.getRelevancia(), aux.getTema()});
         }
         
 		tabla = new JTable(model);

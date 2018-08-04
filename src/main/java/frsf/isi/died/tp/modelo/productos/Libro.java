@@ -39,7 +39,7 @@ public class Libro extends MaterialCapacitacion {
 	 * @param titulo es el titulo del libro
 	 */
 	public Libro(Integer id, String titulo) {
-		this(id, titulo,0.0,0.0,0,0,null,null);
+		this(id, titulo,0.0,0.0,0,0,null,null, null);
 	}
 
 	/**
@@ -52,13 +52,13 @@ public class Libro extends MaterialCapacitacion {
 	 */
 	
 	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas) {
-		super(id, titulo, costo, 0, null, null);
+		super(id, titulo, costo, 0, null, null, null);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
 	
-	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Integer calificacion, Date fechaPub, Relevancia relevancia) {
-		super(id, titulo, costo, calificacion, fechaPub, relevancia);
+	public Libro(Integer id, String titulo, Double costo, Double precioCompra, Integer paginas, Integer calificacion, Date fechaPub, Relevancia relevancia, String tema) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia, tema);
 		this.precioCompra = precioCompra;
 		this.paginas = paginas;
 	}
@@ -148,6 +148,7 @@ public class Libro extends MaterialCapacitacion {
 		lista.add(formato.format(this.fechaPub));
 		
 		lista.add(this.relevancia.toString());
+		lista.add(this.tema.toString());
 		return lista;
 	}
 	
@@ -168,5 +169,6 @@ public class Libro extends MaterialCapacitacion {
 			e.printStackTrace();
 		}
 		this.relevancia =Relevancia.valueOf(datos.get(7));
+		this.tema =String.valueOf(datos.get(8));
 	}
 }

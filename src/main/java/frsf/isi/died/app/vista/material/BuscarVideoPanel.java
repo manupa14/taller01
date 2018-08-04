@@ -32,6 +32,7 @@ public class BuscarVideoPanel extends JPanel{
 	private JComboBox comboBox;
 	private JButton btnBuscar;
 	private JButton btnAgregar;
+	private JButton btnRelaciones;
 	private JTable tabla;
 	
 	private BuscarVideoController controller;
@@ -58,6 +59,7 @@ public class BuscarVideoPanel extends JPanel{
         model.addColumn("Calificacion");
         model.addColumn("Fecha de Publicacion");
         model.addColumn("Relevancia");
+        model.addColumn("Tema");
 		
 		lblTitulo = new JLabel("Seleccionar criterio de busqueda: ");
 		gridConst.gridx=0;
@@ -66,6 +68,7 @@ public class BuscarVideoPanel extends JPanel{
 		
 		comboBox = new JComboBox();
 		comboBox.addItem("Titulo");
+		comboBox.addItem("Tema");
 		comboBox.addItem("Calificacion");
 		comboBox.addItem("Fecha de publicacion");
 		gridConst.gridx=1;
@@ -79,7 +82,7 @@ public class BuscarVideoPanel extends JPanel{
 				resultadoBusqueda = controller.buscarVideoPorTitulo(respuestaTitulo);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
 		        }
 				break;
 			case "Calificacion":
@@ -87,18 +90,26 @@ public class BuscarVideoPanel extends JPanel{
 				resultadoBusqueda = controller.buscarVideoPorCalificacion(respuestaCalificacion);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        }
+				break;
+			case "Tema":
+				String respuestaTema = JOptionPane.showInputDialog("Ingrese Tema a buscar");
+				resultadoBusqueda = controller.buscarVideoPorTema(respuestaTema);
+				
+				for(ArrayList<String> aux : resultadoBusqueda) {
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
 		        }
 				break;
 			case "Fecha de publicacion":
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				
-				String respuestaFechaDesde = JOptionPane.showInputDialog("Ingrese desde que fecha");
-				String respuestaFechaHasta = JOptionPane.showInputDialog("Ingrese hasta que fecha");
+				String respuestaFechaDesde = JOptionPane.showInputDialog("Ingrese desde que fecha (dd/mm/yyyy)");
+				String respuestaFechaHasta = JOptionPane.showInputDialog("Ingrese hasta que fecha (dd/mm/yyyy)");
 				resultadoBusqueda = controller.buscarVideoPorFecha(respuestaFechaDesde, respuestaFechaHasta);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
 		        }
 				try {
 					Date fechaDesde = formato.parse(respuestaFechaDesde);
@@ -137,9 +148,11 @@ public class BuscarVideoPanel extends JPanel{
 		int indiceCalificacion = 4;
 		int indiceFecha = 5;
 		int indiceRelevancia = 6;
+		int indiceTema = 7;
 		
 		sorter.setSortable(indiceID, false);
 		sorter.setSortable(indiceDuracion, false);
+		sorter.setSortable(indiceTema, false);
 		
 		sorter.setComparator(indiceTitulo, new Comparator<String>() {
 			 @Override

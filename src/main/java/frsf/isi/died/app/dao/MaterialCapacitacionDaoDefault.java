@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -39,12 +40,14 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		List<List<String>> libros = dataSource.readFile("libros.csv");
 		for(List<String> filaLibro : libros) {
 			Libro aux = new Libro();
+			aux.setPageRank(1.0);
 			aux.loadFromStringRow(filaLibro);
 			GRAFO_MATERIAL.addNodo(aux);
 		}
 		List<List<String>> videos= dataSource.readFile("videos.csv");
 		for(List<String> filaVideo: videos) {
 			Video aux = new Video();
+			aux.setPageRank(1.0);
 			aux.loadFromStringRow(filaVideo);
 			GRAFO_MATERIAL.addNodo(aux);
 		}
@@ -66,12 +69,13 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		}
 	}
 	
+	@Override
 	public PriorityQueue<MaterialCapacitacion> getWishlist() {
 		PriorityQueue<MaterialCapacitacion> wishlist = new PriorityQueue<MaterialCapacitacion>(10, new ComparadorMateriales());
 		List<List<String>> wishlistAux = dataSource.readFile("wishlist.csv");
 		
 		for(List<String> aux : wishlistAux) {
-			if(aux.size() == 7) {
+			if(aux.size() == 8) {
 				Video videoAux = new Video();
 				videoAux.loadFromStringRow(aux);
 				wishlist.add(videoAux);
@@ -83,6 +87,41 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		}
 		
 		return wishlist;
+	}
+	
+	@Override
+	public void calcularPageRank(List<MaterialCapacitacion> materiales) {
+		int iteraciones = 0;
+		ArrayList<Double> pageRankPorMaterial = new ArrayList<Double>();
+		
+		while(iteraciones < 12) {
+			for(MaterialCapacitacion auxMaterial : materiales) {
+				pageRankPorMaterial.add(pageRank(auxMaterial));
+			}
+			
+			for(int i=0; i<materiales.size(); i++) {
+				materiales.get(i).setPageRank(pageRankPorMaterial.get(i));
+			}
+			
+			pageRankPorMaterial.clear();
+			iteraciones++;
+		}
+		
+	}
+	
+	@Override
+	public Double pageRank(MaterialCapacitacion material) {
+		Double resultado = 1.0;
+		Double calculo = 0.0;
+		
+		if(!GRAFO_MATERIAL.getRelacionesPageRank(material).isEmpty()) {
+			for(MaterialCapacitacion aux : GRAFO_MATERIAL.getRelacionesPageRank(material)) {
+				calculo = calculo + ((Double) (aux.getPageRank()/GRAFO_MATERIAL.gradoSalida(aux)));
+			}
+			resultado = 0.5 + (0.5 * calculo);
+		}
+		
+		return resultado;
 	}
 	
 	@Override
@@ -141,7 +180,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		
 		for(List<String> aux : librosAux) {
 			if(aux.get(1).equals(dato)) {
-				System.out.println(dato);
+				libros.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return libros;
+	}
+	
+	@Override
+	public List<ArrayList<String>> buscarLibroPorTema(String dato){
+		List<List<String>> librosAux = dataSource.readFile("libros.csv");
+		List<ArrayList<String>> libros = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : librosAux) {
+			if(aux.get(8).equals(dato)) {
 				libros.add((ArrayList<String>) aux);
 			}
 		}
@@ -156,7 +208,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		
 		for(List<String> aux : librosAux) {
 			if(aux.get(5).equals(dato)) {
-				System.out.println(dato);
 				libros.add((ArrayList<String>) aux);
 			}
 		}
@@ -249,7 +300,20 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		
 		for(List<String> aux : videosAux) {
 			if(aux.get(1).equals(dato)) {
-				System.out.println(dato);
+				videos.add((ArrayList<String>) aux);
+			}
+		}
+		
+		return videos;
+	}
+	
+	@Override
+	public List<ArrayList<String>> buscarVideoPorTema(String dato){
+		List<List<String>> videosAux = dataSource.readFile("videos.csv");
+		List<ArrayList<String>> videos = new ArrayList<ArrayList<String>>();
+		
+		for(List<String> aux : videosAux) {
+			if(aux.get(7).equals(dato)) {
 				videos.add((ArrayList<String>) aux);
 			}
 		}
@@ -264,7 +328,6 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 		
 		for(List<String> aux : videosAux) {
 			if(aux.get(4).equals(dato)) {
-				System.out.println(dato);
 				videos.add((ArrayList<String>) aux);
 			}
 		}
@@ -323,6 +386,23 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	public List<MaterialCapacitacion> listaMateriales() {
 		// TODO Auto-generated method stub
 		return GRAFO_MATERIAL.listaVertices();
+	}
+	
+	@Override
+	public List<MaterialCapacitacion> listaMaterialesPorTema(String tema) {
+		ArrayList<MaterialCapacitacion> listaAux = (ArrayList<MaterialCapacitacion>) listaMateriales();
+		
+		Iterator<MaterialCapacitacion> iter = listaAux.iterator();
+		
+		while(iter.hasNext()) {
+			MaterialCapacitacion aux = iter.next();
+			
+			if(!aux.getTema().equals(tema)) {
+				iter.remove();
+			}
+		}
+		
+		return listaAux;
 	}
 
 	@Override

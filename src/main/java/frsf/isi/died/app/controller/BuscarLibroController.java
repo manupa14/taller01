@@ -24,6 +24,10 @@ public class BuscarLibroController {
 		return materialDAO.buscarLibroPorTitulo(dato);
 	}
 	
+	public List<ArrayList<String>> buscarLibroPorTema(String dato) {
+		return materialDAO.buscarLibroPorTema(dato);
+	}
+	
 	public List<ArrayList<String>> buscarLibroPorCalificacion(String dato) {
 		return materialDAO.buscarLibroPorCalificacion(dato);
 	}

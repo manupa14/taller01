@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import frsf.isi.died.app.controller.BorrarLibroController;
@@ -50,6 +51,7 @@ public class BorrarLibroPanel extends JPanel{
 		
 		btnBorrar.addActionListener(e -> {
 			this.materialDAO.borrarLibro((Libro) comboBox.getSelectedItem());
+			JOptionPane.showMessageDialog(this, "Se borro el libro correctamente, reiniciar para completar los cambios");
 		});	
 		
 	}

@@ -27,7 +27,7 @@ public class Principal {
 
 	        menuBar = new JMenuBar();
 
-	        menu = new JMenu("Sistema");
+	        menu = new JMenu("Inicio");
 	        menuBar.add(menu);
 	        
 	        menuItem = new JMenuItem("Nuevo Libro");
@@ -78,8 +78,12 @@ public class Principal {
 	        menu = new JMenu("Opciones");
 	        menuBar.add(menu);
 	        
-	        menuItem = new JMenuItem("Buscar Camino");
+	        menuItem = new JMenuItem("Asignar Relaciones/Buscar Caminos");
 	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.VER_GRAFO));
+	        menu.add(menuItem);
+	        
+	        menuItem = new JMenuItem("Consultar Page Ranks");
+	        menuItem.addActionListener(e -> controller.showView(TiposAcciones.PAGE_RANK));
 	        menu.add(menuItem);
 	        menuBar.add(menu);
 	        

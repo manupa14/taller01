@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 import frsf.isi.died.tp.modelo.productos.Libro;
-import frsf.isi.died.tp.modelo.productos.MaterialCapacitacion;
 import frsf.isi.died.app.controller.BuscarLibroController;
 import frsf.isi.died.app.dao.MaterialCapacitacionDao;
 import frsf.isi.died.app.dao.MaterialCapacitacionDaoDefault;
@@ -34,13 +31,15 @@ public class BuscarLibroPanel extends JPanel{
 	private JComboBox comboBox;
 	private JButton btnBuscar;
 	private JButton btnAgregar;
+	private JButton btnRelaciones;
 	private JTable tabla;
 	
 	private BuscarLibroController controller;
 	
 	private List<ArrayList<String>> resultadoBusqueda;
-	
+    
 	private MaterialCapacitacionDao materialDAO;
+	
 
 	public BuscarLibroPanel() {
 		this.setLayout(new GridBagLayout());
@@ -61,6 +60,7 @@ public class BuscarLibroPanel extends JPanel{
         model.addColumn("Calificacion");
         model.addColumn("Fecha de Publicacion");
         model.addColumn("Relevancia");
+        model.addColumn("Tema");
 		
 		lblTitulo = new JLabel("Seleccionar criterio de busqueda: ");
 		gridConst.gridx=0;
@@ -69,6 +69,7 @@ public class BuscarLibroPanel extends JPanel{
 		
 		comboBox = new JComboBox();
 		comboBox.addItem("Titulo");
+		comboBox.addItem("Tema");
 		comboBox.addItem("Calificacion");
 		comboBox.addItem("Fecha de publicacion");
 		gridConst.gridx=1;
@@ -82,7 +83,7 @@ public class BuscarLibroPanel extends JPanel{
 				resultadoBusqueda = controller.buscarLibroPorTitulo(respuestaTitulo);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7), aux.get(8)});
 		        }
 				break;
 			case "Calificacion":
@@ -90,18 +91,27 @@ public class BuscarLibroPanel extends JPanel{
 				resultadoBusqueda = controller.buscarLibroPorCalificacion(respuestaCalificacion);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7), aux.get(8)});
+		        }
+				break;
+				
+			case "Tema":
+				String respuestaTema = JOptionPane.showInputDialog("Ingrese Tema a buscar");
+				resultadoBusqueda = controller.buscarLibroPorTema(respuestaTema);
+				
+				for(ArrayList<String> aux : resultadoBusqueda) {
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7), aux.get(8)});
 		        }
 				break;
 			case "Fecha de publicacion":
 				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 				
-				String respuestaFechaDesde = JOptionPane.showInputDialog("Ingrese desde que fecha");
-				String respuestaFechaHasta = JOptionPane.showInputDialog("Ingrese hasta que fecha");
+				String respuestaFechaDesde = JOptionPane.showInputDialog("Ingrese desde que fecha (dd/mm/yyyy)");
+				String respuestaFechaHasta = JOptionPane.showInputDialog("Ingrese hasta que fecha (dd/mm/yyyy)");
 				resultadoBusqueda = controller.buscarLibroPorFecha(respuestaFechaDesde, respuestaFechaHasta);
 				
 				for(ArrayList<String> aux : resultadoBusqueda) {
-		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7)});
+		        	model.addRow(new Object[] {aux.get(0), aux.get(1), aux.get(2), aux.get(3), aux.get(4), aux.get(5), aux.get(6), aux.get(7), aux.get(8)});
 		        }
 				try {
 					Date fechaDesde = formato.parse(respuestaFechaDesde);
@@ -235,7 +245,7 @@ public class BuscarLibroPanel extends JPanel{
 		gridConst.anchor=GridBagConstraints.PAGE_START;	
 		this.add(scrollPane, gridConst);
 	}
-	
+
 	public void setController(BuscarLibroController controller) {
 		this.controller = controller;
 	}
@@ -243,4 +253,5 @@ public class BuscarLibroPanel extends JPanel{
 	public BuscarLibroController getController() {
 		return controller;
 	}
+	
 }

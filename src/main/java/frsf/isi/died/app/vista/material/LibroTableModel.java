@@ -9,7 +9,7 @@ import frsf.isi.died.tp.modelo.productos.Libro;
 public class LibroTableModel  extends AbstractTableModel {
 
 	private List<Libro> libros;
-	private String[] columnas = {"ID","Titulo","Precio Compra","Costo publicacion","Paginas","Precio Suscripcion","Calificacion","Fecha publicacion", "Relevancia"};
+	private String[] columnas = {"ID","Titulo","Precio Compra","Costo publicacion","Paginas","Precio Suscripcion","Calificacion","Fecha publicacion", "Relevancia", "Tema"};
 	
 	
 	@Override
@@ -65,6 +65,9 @@ public class LibroTableModel  extends AbstractTableModel {
 			break;
 		case 8:
 			valor = this.libros.get(rowIndex).getRelevancia();
+			break;
+		case 9:
+			valor = this.libros.get(rowIndex).getTema();
 			break;
 		default:
 			System.out.println("Indice fuera de rango");

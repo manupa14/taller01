@@ -52,7 +52,7 @@ public class GrafoController {
 	}
 
 
-	public List<MaterialCapacitacion> listaVertices() {
-		return materialDao.listaMateriales();
+	public List<MaterialCapacitacion> listaVertices(String tema) {
+		return materialDao.listaMaterialesPorTema(tema);
 	}
 }

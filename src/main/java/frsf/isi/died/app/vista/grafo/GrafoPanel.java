@@ -21,6 +21,7 @@ import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -42,13 +43,17 @@ public class GrafoPanel extends JPanel {
     private List<AristaView> aristas;
 
     private AristaView auxiliar;
+    
+    private JLabel lblRelaciones;
 
     public GrafoPanel() {
         this.framePadre = (JFrame) this.getParent();
         
+        lblRelaciones = new JLabel("*** Doble click en el panel para agregar un Material. Arrastrar de un vertice a otro para agregar Relaciones entre Materiales ***");
+        this.add(lblRelaciones);
+        
         this.vertices = new ArrayList<>();
         this.aristas = new ArrayList<>();
-
         
         this.colaColores = new LinkedList<Color>();
         this.colaColores.add(Color.RED);
@@ -60,7 +65,8 @@ public class GrafoPanel extends JPanel {
             public void mouseClicked(MouseEvent event) {
                 if (event.getClickCount() == 2 && !event.isConsumed()) {
                     event.consume();
-                    Object[] mats = controller.listaVertices().toArray();
+                    String tema = JOptionPane.showInputDialog(framePadre, "Indique el tema del Material a agregar");
+                    Object[] mats = controller.listaVertices(tema).toArray();
                     //String text = JOptionPane.showInputDialog(, "ID del nodo");
                     Object verticeMatSeleccionado= (MaterialCapacitacion) JOptionPane.showInputDialog(framePadre, 
                             "Que material corresponde con el vertice?",
@@ -85,7 +91,7 @@ public class GrafoPanel extends JPanel {
                 if (auxiliar!=null && vDestino != null) {
                     auxiliar.setDestino(vDestino);
                     controller.crearArista(auxiliar);
-                    auxiliar = null;
+                      auxiliar = null;
                 }
             }
 

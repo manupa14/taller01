@@ -31,6 +31,7 @@ public class LibroPanel extends JPanel{
 	private JLabel lblCalificacion;
 	private JLabel lblFechaPub;
 	private JLabel lblRelevancia;
+	private JLabel lblTema;
 	private JTextField txtTitulo;
 	private JTextField txtCosto;
 	private JTextField txtPrecioCompra;
@@ -38,6 +39,7 @@ public class LibroPanel extends JPanel{
 	private JTextField txtCalificacion;
 	private JTextField txtFechaPub;
 	private JTextField txtRelevancia;
+	private JTextField txtTema;
 	private JButton btnAgregar;
 	private JButton btnCancelar;
 	private JButton btnBorrar;
@@ -64,6 +66,14 @@ public class LibroPanel extends JPanel{
 		gridConst.gridwidth=5;
 		this.add(txtTitulo, gridConst);
 		
+		lblTema = new JLabel("Tema: ");
+		gridConst.gridx=4;
+		this.add(lblTema, gridConst);
+		
+		txtTema = new JTextField();
+		txtTema.setColumns(20);
+		gridConst.gridx=6;
+		this.add(txtTema, gridConst);
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener( e ->{
@@ -77,8 +87,9 @@ public class LibroPanel extends JPanel{
 				Date fechaPub = formato.parse(txtFechaPub.getText());
 				
 				Relevancia relevancia = Relevancia.valueOf(txtRelevancia.getText());
+				String tema = String.valueOf(txtTema.getText());
 				
-				controller.agregarLibro(txtTitulo.getText(), costo, precio, paginas, calificacion, fechaPub, relevancia);
+				controller.agregarLibro(txtTitulo.getText(), costo, precio, paginas, calificacion, fechaPub, relevancia, tema);
 				txtTitulo.setText("");
 				txtCosto.setText("");
 				txtPrecioCompra.setText("");
@@ -86,6 +97,8 @@ public class LibroPanel extends JPanel{
 				txtCalificacion.setText("");
 				txtFechaPub.setText("");
 				txtRelevancia.setText("");
+				txtTema.setText("");
+				JOptionPane.showMessageDialog(this, "Se agrego el libro correctamente");
 			}catch(Exception ex) {
 			    JOptionPane.showMessageDialog(this, ex.getMessage(), "Datos incorrectos", JOptionPane.ERROR_MESSAGE);
 			}
@@ -134,7 +147,7 @@ public class LibroPanel extends JPanel{
 		gridConst.gridx=7;
 		this.add(txtCalificacion, gridConst);
 		
-		lblFechaPub= new JLabel("Fecha Publicacion: ");
+		lblFechaPub= new JLabel("Fecha Publicacion (dd/mm/yyyy): ");
 		gridConst.gridx=8;
 		this.add(lblFechaPub, gridConst);
 		

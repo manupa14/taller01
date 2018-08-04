@@ -14,6 +14,7 @@ import frsf.isi.died.app.vista.material.BorrarVideoPanel;
 import frsf.isi.died.app.vista.material.BuscarLibroPanel;
 import frsf.isi.died.app.vista.material.BuscarVideoPanel;
 import frsf.isi.died.app.vista.material.LibroPanel;
+import frsf.isi.died.app.vista.material.PageRankPanel;
 import frsf.isi.died.app.vista.material.VideoPanel;
 import frsf.isi.died.app.vista.material.WishlistPanel;
 
@@ -80,6 +81,12 @@ public class MenuController {
 			WishlistController controllerWishlist = new WishlistController(panelWishlist);
 			controllerWishlist.crearPanelWishlist();
 			framePrincipal.setContentPane(controllerWishlist.getPanelWishlist());
+			break;
+		case PAGE_RANK:
+			PageRankPanel panelPageRank = new PageRankPanel();
+			PageRankController controllerPageRank = new PageRankController(panelPageRank);
+			controllerPageRank.crearPanelPageRank();
+			framePrincipal.setContentPane(controllerPageRank.getPanelPageRank());
 			break;
 		case VER_GRAFO:
 			JPanel panel = new JPanel(new BorderLayout());

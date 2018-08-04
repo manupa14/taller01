@@ -10,7 +10,7 @@ import frsf.isi.died.tp.modelo.productos.Video;
 public class VideoTableModel  extends AbstractTableModel {
 
 	private List<Video> videos;
-	private String[] columnas = {"ID","Titulo","Precio Compra","Costo publicacion","Duracion","Calificacion","Fecha Publicacion","Relevancia"};
+	private String[] columnas = {"ID","Titulo","Precio Compra","Costo publicacion","Duracion","Calificacion","Fecha Publicacion","Relevancia", "Tema"};
 	
 	
 	@Override
@@ -55,9 +55,6 @@ public class VideoTableModel  extends AbstractTableModel {
 		case 4:
 			valor = this.videos.get(rowIndex).getDuracion();
 			break;
-		/*case 5:
-			valor = this.videos.get(rowIndex).precio();
-			break;*/
 		case 5:
 			valor = this.videos.get(rowIndex).getCalificacion();
 			break;
@@ -66,6 +63,9 @@ public class VideoTableModel  extends AbstractTableModel {
 			break;
 		case 7:
 			valor = this.videos.get(rowIndex).getRelevancia();
+			break;
+		case 8:
+			valor = this.videos.get(rowIndex).getTema();
 			break;
 		default:
 			System.out.println("Indice fuera de rango");

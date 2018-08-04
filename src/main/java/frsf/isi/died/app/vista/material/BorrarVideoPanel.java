@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import frsf.isi.died.app.controller.BorrarVideoController;
@@ -50,6 +51,7 @@ public class BorrarVideoPanel extends JPanel{
 		
 		btnBorrar.addActionListener(e -> {
 			this.materialDAO.borrarVideo((Video) comboBox.getSelectedItem());
+			JOptionPane.showMessageDialog(this, "Se borro el video correctamente, reiniciar para completar los cambios");
 		});	
 		
 	}

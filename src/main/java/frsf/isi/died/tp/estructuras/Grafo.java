@@ -258,4 +258,17 @@ public class Grafo<T> {
     	}
 		return resultado;
     }
+    
+    public List<T> getRelacionesPageRank(T nodo) {
+    	List<T> nodos = new ArrayList<T>();
+    	
+    	for(Arista aux : this.aristas) {
+    		if(aux.getFin().equals(this.getNodo(nodo))) {
+    			nodos.add( (T) aux.getInicio().getValor());
+    		}
+    	}
+    	
+    	return nodos;
+    }
+    
 }

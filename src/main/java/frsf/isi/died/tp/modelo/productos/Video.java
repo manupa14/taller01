@@ -31,20 +31,20 @@ public class Video extends MaterialCapacitacion {
 	}
 
 	public Video(Integer id,String titulo, Double costo) {
-		super(id, titulo, costo, 0, null, null);
+		super(id, titulo, costo, 0, null, null, null);
 	}
 	
 	public Video(Integer id,String titulo, Double costo, Integer duracion) {
-		super(id, titulo, costo, 0, null, null);
+		super(id, titulo, costo, 0, null, null, null);
 		this.setDuracion(duracion);
 	}
 	
-	public Video(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia) {
-		super(id, titulo, costo, calificacion, fechaPub, relevancia);
+	public Video(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia, String tema) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia, tema);
 	}
 
-	public Video(Integer id,String titulo, Double costo, Integer duracion, Integer calificacion, Date fechaPub, Relevancia relevancia) {
-		super(id, titulo, costo, calificacion, fechaPub, relevancia);
+	public Video(Integer id,String titulo, Double costo, Integer duracion, Integer calificacion, Date fechaPub, Relevancia relevancia, String tema) {
+		super(id, titulo, costo, calificacion, fechaPub, relevancia, tema);
 		this.setDuracion(duracion);
 	}
 	
@@ -88,6 +88,7 @@ public class Video extends MaterialCapacitacion {
 		lista.add(formato.format(this.fechaPub));
 		
 		lista.add(this.relevancia.toString());
+		lista.add(this.tema.toString());
 		return lista;
 	}
 
@@ -108,5 +109,6 @@ public class Video extends MaterialCapacitacion {
 		}
 		
 		this.relevancia = Relevancia.valueOf(datos.get(6));
+		this.tema = String.valueOf(datos.get(7));
 	}
 }

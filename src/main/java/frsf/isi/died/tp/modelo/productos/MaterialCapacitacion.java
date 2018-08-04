@@ -43,8 +43,18 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	protected Integer calificacion;
 	protected Date fechaPub;
 	protected Relevancia relevancia;
+	protected String tema;
+	protected Double pageRank;
 	
-
+	
+	public void setPageRank(Double pr) {
+		this.pageRank = pr;
+	}
+	
+	public Double getPageRank() {
+		return this.pageRank;
+	}
+	
 	public Integer getCalificacion() {
 		return calificacion;
 	}
@@ -73,7 +83,7 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * Constructor por defecto
 	 */
 	public MaterialCapacitacion() {
-		this(0,"en desarrollo",0.0,0,null,null);
+		this(0,"en desarrollo",0.0,0,null,null, null);
 	}
 
 	/**
@@ -83,11 +93,11 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param titulo
 	 */
 	public MaterialCapacitacion(Integer id, String titulo) {
-		this(id,titulo,0.0,0,null,null);
+		this(id,titulo,0.0,0,null,null, null);
 	}
 	
 	public MaterialCapacitacion(Integer id, String titulo, Double costo) {
-		this(id,titulo,costo,0,null,null);
+		this(id,titulo,costo,0,null,null, null);
 	}
 
 	/**
@@ -96,13 +106,14 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	 * @param id
 	 * @param titulo
 	 */
-	public MaterialCapacitacion(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia) {
+	public MaterialCapacitacion(Integer id,String titulo, Double costo, Integer calificacion, Date fechaPub, Relevancia relevancia, String tema) {
 		this.calificacion = calificacion;
 		this.fechaPub = fechaPub;
 		this.relevancia = relevancia;
 		this.id =id;
 		this.titulo = titulo;
 		this.costo = costo;
+		this.tema = tema;
 	}
 
 
@@ -141,6 +152,14 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 
 	public void setCosto(Double costo) {
 		this.costo = costo;
+	}
+	
+	public String getTema() {
+		return tema;
+	}
+	
+	public void setTema(String tema) {
+		this.tema = tema;
 	}
 
 	/**
