@@ -9,6 +9,7 @@ import frsf.isi.died.app.vista.grafo.ControlPanel;
 import frsf.isi.died.app.vista.grafo.GrafoPanel;
 import frsf.isi.died.app.vista.material.ActualizarLibroPanel;
 import frsf.isi.died.app.vista.material.ActualizarVideoPanel;
+import frsf.isi.died.app.vista.material.ArbolContenidoPanel;
 import frsf.isi.died.app.vista.material.BorrarLibroPanel;
 import frsf.isi.died.app.vista.material.BorrarVideoPanel;
 import frsf.isi.died.app.vista.material.BuscarLibroPanel;
@@ -81,6 +82,12 @@ public class MenuController {
 			WishlistController controllerWishlist = new WishlistController(panelWishlist);
 			controllerWishlist.crearPanelWishlist();
 			framePrincipal.setContentPane(controllerWishlist.getPanelWishlist());
+			break;
+		case CONTENIDO:
+			ArbolContenidoPanel panelContenido = new ArbolContenidoPanel();
+			ArbolContenidoController controllerContenido = new ArbolContenidoController(panelContenido);
+			controllerContenido.crearPanelContenido();
+			framePrincipal.setContentPane(controllerContenido.getPanelContenido());
 			break;
 		case PAGE_RANK:
 			PageRankPanel panelPageRank = new PageRankPanel();

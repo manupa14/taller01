@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 import frsf.isi.died.app.dao.util.CsvRecord;
+import frsf.isi.died.tp.estructuras.contenido.ArbolContenido;
+import frsf.isi.died.tp.estructuras.contenido.TipoNodo;
 import frsf.isi.died.tp.util.Ordenable;
 
 /**
@@ -45,7 +47,12 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 	protected Relevancia relevancia;
 	protected String tema;
 	protected Double pageRank;
+	protected ArbolContenido contenido;
 	
+	
+	public ArbolContenido getContenido() {
+		return contenido;
+	}
 	
 	public void setPageRank(Double pr) {
 		this.pageRank = pr;
@@ -114,6 +121,8 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.titulo = titulo;
 		this.costo = costo;
 		this.tema = tema;
+		this.pageRank = 1.0;
+		this.contenido = new ArbolContenido(titulo, TipoNodo.TITULO);
 	}
 
 
