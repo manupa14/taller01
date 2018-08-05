@@ -38,6 +38,13 @@ public class ArbolContenido {
 		this.hijos.add(hijo);
 	}
 	
+	public ArbolContenido getCapitulo(ArrayList<ArbolContenido> hijos) {
+		String pito = "hola";
+		
+		
+		return new ArbolContenido(pito, TipoNodo.CAPITULO);
+	}
+	
 	public void agregarHijo(ArbolContenido hijo, TipoNodo padre) {
 		
 		switch(padre) {
@@ -55,7 +62,7 @@ public class ArbolContenido {
 				for(ArbolContenido aux : this.getHijos()) {
 					if(aux.getTipo().equals(TipoNodo.CAPITULO)) {
 						for(ArbolContenido aux2 : aux.getHijos()) {
-							if(aux.getTipo().equals(TipoNodo.SECCION)) {
+							if(aux2.getTipo().equals(TipoNodo.SECCION)) {
 								aux2.agregarHijo(hijo);
 							}
 						}

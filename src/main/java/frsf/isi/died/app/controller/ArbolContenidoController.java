@@ -11,6 +11,7 @@ public class ArbolContenidoController {
 	
 	private ArbolContenidoPanel panel;
 	private MaterialCapacitacionDao materialDAO;
+	private List<MaterialCapacitacion> lista;
 	
 	public ArbolContenidoController(ArbolContenidoPanel panelContenido) {
 		this.panel = panelContenido;
@@ -19,7 +20,13 @@ public class ArbolContenidoController {
 	}
 	
 	public List<MaterialCapacitacion> listaMateriales() {
-		return materialDAO.listaMateriales();
+		lista = materialDAO.listaMateriales();
+		
+		for(MaterialCapacitacion aux : lista) {
+			aux.getContenido().setValor(aux.getTitulo());
+		}
+		
+		return lista;
 	}
 	
 	public void crearPanelContenido() {
