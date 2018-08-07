@@ -25,6 +25,7 @@ public interface MaterialCapacitacionDao {
 	public void agregarAWishlist(MaterialCapacitacion material);
 	public PriorityQueue<MaterialCapacitacion> getWishlist();
 	public Double pageRank(MaterialCapacitacion material);
+	public void actualizarPageRank(List<MaterialCapacitacion> materiales, List<Double> pageRankPorMaterial);
 	public void calcularPageRank(List<MaterialCapacitacion> materiales);
 	public List<Libro> listaLibros();
 	public List<Video> listaVideos();

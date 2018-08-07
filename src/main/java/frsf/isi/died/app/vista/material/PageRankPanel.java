@@ -32,7 +32,6 @@ public class PageRankPanel extends JPanel{
 	private PageRankController controller;
 	
 	private List<ArrayList<String>> resultadoBusqueda;
-
 	private List<MaterialCapacitacion> materiales;
 	
 	public PageRankPanel() {
@@ -88,11 +87,30 @@ public class PageRankPanel extends JPanel{
 			controller.calcularPageRank(materiales);
 			
 			for(MaterialCapacitacion mat : materiales) {
-				model.addRow(new Object[] {mat.getId(), mat.getTitulo(), mat.getTema(), mat.getPageRank()});
+				model.addRow(new Object[] {mat.getId(), mat.getTitulo(), mat.getTema(), mat.getPageRank().toString()});
 			}
 		});
 		gridConst.gridx=2;
 		this.add(btnBuscar, gridConst);
+		
+		TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>((DefaultTableModel) tabla.getModel());
+		tabla.setRowSorter(sorter);
+		
+		int indiceID = 0;
+		int indiceTitulo = 1;
+		int indiceTema = 2;
+		int indicePageRank = 3;
+		
+		sorter.setSortable(indiceID, false);
+		sorter.setSortable(indiceTitulo, false);
+		sorter.setSortable(indiceTema, false);
+		
+		sorter.setComparator(indicePageRank, new Comparator<String>() {
+			 @Override
+			 public int compare(String name1, String name2) {
+				 return name1.compareToIgnoreCase(name2);
+			 }
+		});
 		
 		scrollPane = new JScrollPane(tabla);
 		gridConst.gridx=0;

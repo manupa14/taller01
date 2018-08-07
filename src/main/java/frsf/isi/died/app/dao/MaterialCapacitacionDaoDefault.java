@@ -23,8 +23,7 @@ import frsf.isi.died.tp.modelo.productos.Video;
 public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 
 	private static Grafo<MaterialCapacitacion> GRAFO_MATERIAL  = new Grafo<MaterialCapacitacion>();
-	private static Integer SECUENCIA_IDLIBRO=0;
-	private static Integer SECUENCIA_IDVIDEO=0;
+	private static Integer SECUENCIA_ID=0;
 	private static Biblioteca biblioteca = new BibliotecaABB();
 	
 	private CsvDatasource dataSource;
@@ -91,42 +90,44 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	
 	@Override
 	public void calcularPageRank(List<MaterialCapacitacion> materiales) {
-		int iteraciones = 0;
-		ArrayList<Double> pageRankPorMaterial = new ArrayList<Double>();
+		List<Double> pageRankPorMaterial = new ArrayList<Double>();
 		
-		while(iteraciones < 12) {
+		for(int i=0; i<10; i++) {
 			for(MaterialCapacitacion auxMaterial : materiales) {
 				pageRankPorMaterial.add(pageRank(auxMaterial));
 			}
-			
-			for(int i=0; i<materiales.size(); i++) {
-				materiales.get(i).setPageRank(pageRankPorMaterial.get(i));
-			}
+
+			actualizarPageRank(materiales, pageRankPorMaterial);
 			
 			pageRankPorMaterial.clear();
-			iteraciones++;
 		}
-		
 	}
 	
 	@Override
 	public Double pageRank(MaterialCapacitacion material) {
 		Double resultado = 1.0;
-		Double calculo = 0.0;
+		Double sumatoria = 0.0;
 		
-		if(!GRAFO_MATERIAL.getRelacionesPageRank(material).isEmpty()) {
-			for(MaterialCapacitacion aux : GRAFO_MATERIAL.getRelacionesPageRank(material)) {
-				calculo = calculo + ((Double) (aux.getPageRank()/GRAFO_MATERIAL.gradoSalida(aux)));
-			}
-			resultado = 0.5 + (0.5 * calculo);
+		for(MaterialCapacitacion aux : GRAFO_MATERIAL.getRelacionesPageRank(material)) {
+			sumatoria += ((Double) (aux.getPageRank()/GRAFO_MATERIAL.gradoSalida(aux)));
 		}
+		resultado = 0.5 + (0.5 * sumatoria);
 		
 		return resultado;
 	}
 	
 	@Override
+	public void actualizarPageRank(List<MaterialCapacitacion> materiales, List<Double> pageRankPorMaterial) {
+		
+		for(int i=0; i<materiales.size(); i++) {
+			materiales.get(i).setPageRank(pageRankPorMaterial.get(i));
+		}
+		
+	}
+	
+	@Override
 	public void agregarLibro(Libro mat) {
-		mat.setId(++SECUENCIA_IDLIBRO);
+		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);	
 		biblioteca.agregar(mat);
 		try {
@@ -246,7 +247,7 @@ public class MaterialCapacitacionDaoDefault implements MaterialCapacitacionDao{
 	
 	@Override
 	public void agregarVideo(Video mat) {
-		mat.setId(++SECUENCIA_IDVIDEO);
+		mat.setId(++SECUENCIA_ID);
 		GRAFO_MATERIAL.addNodo(mat);				
 		biblioteca.agregar(mat);
 		try {

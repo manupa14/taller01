@@ -121,7 +121,6 @@ public abstract class MaterialCapacitacion implements Ordenable, Comparable<Mate
 		this.titulo = titulo;
 		this.costo = costo;
 		this.tema = tema;
-		this.pageRank = 1.0;
 		this.contenido = new ArbolContenido(titulo, TipoNodo.TITULO);
 	}
 
